@@ -1,0 +1,5 @@
+1. laravel new advance
+2. Create db in sql and edit .env file
+3. Run command to launch app
+    $ php artisan ser
+4. Initialise git repository and commit
