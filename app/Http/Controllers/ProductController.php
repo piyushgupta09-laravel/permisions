@@ -10,6 +10,16 @@ use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -21,6 +31,25 @@ class ProductController extends Controller
             'products' => $products->sortByDesc('updated_at')
         ]);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Product $product)
+    {
+        if ($product->archive) {
+            return back();
+        }
+
+        return view('products.show', [
+            'product' => $product
+        ]);
+    }
+
+    // ADMIN ACCESS ONLY
 
     public function archived()
     {
@@ -68,23 +97,6 @@ class ProductController extends Controller
         }
         $product->save();
         return redirect()->route('products.show', $product->slug);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        if ($product->archive) {
-            return back();
-        }
-
-        return view('products.show', [
-            'product' => $product
-        ]);
     }
 
     /**
