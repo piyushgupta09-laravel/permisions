@@ -1,0 +1,8 @@
+$ php artisan make:model Product --all
+    Model created successfully.
+    Factory created successfully.
+    Created Migration: 2020_10_27_072219_create_products_table
+    Seeder created successfully.
+    Controller created successfully.
+
+$ php artisan migrate --seed
